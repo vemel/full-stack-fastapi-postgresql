@@ -1,4 +1,3 @@
-#from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud, schemas
@@ -21,7 +20,6 @@ async def init_db(db: AsyncSession) -> None:
         user_in = schemas.UserCreate(
             email=settings.FIRST_SUPERUSER,
             password=settings.FIRST_SUPERUSER_PASSWORD,
-            phone="88005553535",
             is_superuser=True,
         )
         user = await crud.user.create(db, obj_in=user_in)  # noqa: F841

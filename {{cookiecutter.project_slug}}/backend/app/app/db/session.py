@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy import event
+from sqlalchemy.engine import Connection
+from typing import Any
 import time
 import logging
 from sqlalchemy.orm import sessionmaker
@@ -23,19 +25,16 @@ if settings.PROFILE_QUERY_MODE:
     logger = logging.getLogger("myapp.sqltime")
     logger.setLevel(logging.DEBUG)
 
-
-    def before_cursor_execute(conn, cursor, statement,
-                              parameters, context, executemany):
+    def before_cursor_execute(conn: Connection, cursor: Any, statement: Any,
+                              parameters: Any, context: Any, executemany: Any) -> None:
         conn.info.setdefault('query_start_time', []).append(time.time())
         logger.debug("Start Query: %s" % statement)
 
-
-    def after_cursor_execute(conn, cursor, statement,
-                             parameters, context, executemany):
+    def after_cursor_execute(conn: Connection, cursor: Any, statement: Any,
+                             parameters: Any, context: Any, executemany: Any) -> None:
         total = time.time() - conn.info['query_start_time'].pop(-1)
         logger.debug("Query Complete!")
         logger.debug("Total Time: %f" % total)
-
 
     event.listen(engine_async.sync_engine, "before_cursor_execute", before_cursor_execute)
     event.listen(engine_async.sync_engine, "after_cursor_execute", after_cursor_execute)

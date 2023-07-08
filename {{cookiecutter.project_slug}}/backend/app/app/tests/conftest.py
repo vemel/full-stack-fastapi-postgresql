@@ -1,6 +1,5 @@
-from typing import Dict, Generator, AsyncGenerator
+from typing import Dict, AsyncGenerator
 import asyncio
-import pytest
 import pytest_asyncio
 from websockets.client import ClientConnection as Connect
 # from fastapi.testclient import TestClient
