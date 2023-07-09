@@ -36,17 +36,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         res = result.scalars().all()
         return res
 
-    async def get_multi_by_owner(
-        self, db: AsyncSession, *, owner_id: int, skip: int = 0, limit: int = 100
-    ) -> List[ModelType]:
-        result = await db.execute(
-            select(self.model)
-            .filter(self.model.owner_id == owner_id)
-            .offset(skip)
-            .limit(limit)
-        )
-        return result.scalars().all()
-
     async def create(self, db: AsyncSession, *, obj_in: CreateSchemaType) -> ModelType:
         # obj_in_data = jsonable_encoder(obj_in)
         obj_in_data = obj_in.dict()

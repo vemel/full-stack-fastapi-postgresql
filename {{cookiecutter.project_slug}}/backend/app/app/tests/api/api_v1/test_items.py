@@ -1,8 +1,7 @@
+from typing import Any, Dict
+
 import pytest
-from typing import Dict, Any
-
 from httpx import AsyncClient
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings

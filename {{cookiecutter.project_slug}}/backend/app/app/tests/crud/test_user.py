@@ -1,6 +1,5 @@
 import pytest
 from fastapi.encoders import jsonable_encoder
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud
