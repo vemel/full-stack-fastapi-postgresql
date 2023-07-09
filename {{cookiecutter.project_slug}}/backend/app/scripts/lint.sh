@@ -4,5 +4,5 @@ set -x
 
 mypy app
 black app --check
-isort --check-only app
+isort --check-only --diff app
 flake8
