@@ -3,6 +3,7 @@ from typing import Any, AsyncGenerator, Dict, Generator
 
 import pytest_asyncio
 from httpx import AsyncClient
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
@@ -57,9 +58,9 @@ async def clear_db(async_get_db: AsyncSession) -> None:
     try:
         # Try to create session to check if DB is awake
         async with engine_async.begin() as conn:
-            await conn.run_sync(base.Base.metadata.drop_all)
-            await conn.run_sync(base.Base.metadata.create_all)
+            await conn.run_sync(base.Base.metadata.drop_all)  # type: ignore
+            await conn.run_sync(base.Base.metadata.create_all)  # type: ignore
         await init_db(db=async_get_db)
-        await async_get_db.execute("SELECT 1")  # type: ignore
+        await async_get_db.execute(text("SELECT 1"))
     except Exception as e:
         raise e

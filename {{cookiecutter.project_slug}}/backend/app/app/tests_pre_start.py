@@ -1,6 +1,7 @@
 import asyncio
 import logging
 
+from sqlalchemy import text
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 
 from app.db import base
@@ -27,9 +28,11 @@ async def init() -> None:
             await conn.run_sync(base.Base.metadata.drop_all)  # type: ignore
             logger.info("CREATE DATABASE")
             await conn.run_sync(base.Base.metadata.create_all)  # type: ignore
+
         async with async_session() as db:
             await init_db(db=db)
-            await db.execute("SELECT 1")  # type: ignore
+            await db.execute(text("SELECT 1"))
+
         logger.info("DATABASE DONE")
     except Exception as e:
         logger.error(e)
