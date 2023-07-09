@@ -1,4 +1,5 @@
 from typing import Dict
+
 import pytest
 from httpx import AsyncClient
 
@@ -8,7 +9,7 @@ pytestmark = pytest.mark.asyncio
 
 
 async def test_celery_worker_test(
-        client: AsyncClient, superuser_token_headers: Dict[str, str]
+    client: AsyncClient, superuser_token_headers: Dict[str, str]
 ) -> None:
     data = {"msg": "test"}
     r = await client.post(

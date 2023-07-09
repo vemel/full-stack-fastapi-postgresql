@@ -23,4 +23,6 @@ async def init_db(db: AsyncSession) -> None:
             is_superuser=True,
         )
         user = await crud.user.create(db, obj_in=user_in)  # noqa: F841
-        user = await crud.user.update(db, db_obj=user, obj_in={"is_active": True})  # noqa: F841
+        user = await crud.user.update(
+            db, db_obj=user, obj_in={"is_active": True}
+        )  # noqa: F841

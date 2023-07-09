@@ -1,6 +1,6 @@
 import pytest
 from fastapi.encoders import jsonable_encoder
-# from sqlalchemy.orm import Session
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud
@@ -46,13 +46,16 @@ async def test_check_if_user_is_active(async_get_db: AsyncSession) -> None:
     assert is_active is True
 
 
-async def test_check_if_user_is_active_inactive(async_get_db: AsyncSession) -> None:
+async def test_check_if_user_is_active_inactive(
+    async_get_db: AsyncSession,
+) -> None:
     email = random_email()
     password = random_lower_string()
-    user_in = UserCreate(email=email, password=password, disabled=True)
+    user_in = UserCreate(email=email, password=password, is_active=False)
+    assert user_in.is_active is False
     user = await crud.user.create(async_get_db, obj_in=user_in)
     is_active = crud.user.is_active(user)
-    assert is_active
+    assert is_active is True
 
 
 async def test_check_if_user_is_superuser(async_get_db: AsyncSession) -> None:
@@ -64,7 +67,9 @@ async def test_check_if_user_is_superuser(async_get_db: AsyncSession) -> None:
     assert is_superuser is True
 
 
-async def test_check_if_user_is_superuser_normal_user(async_get_db: AsyncSession) -> None:
+async def test_check_if_user_is_superuser_normal_user(
+    async_get_db: AsyncSession,
+) -> None:
     username = random_email()
     password = random_lower_string()
     user_in = UserCreate(email=username, password=password)

@@ -3,9 +3,9 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union, cas
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.expression import select
 
 from app.db.base_class import Base
-from sqlalchemy.sql.expression import select
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -29,7 +29,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return result.scalars().first()
 
     async def get_multi(
-            self, db: AsyncSession, *, skip: int = 0, limit: int = 100
+        self, db: AsyncSession, *, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
         query = select(self.model).offset(skip).limit(limit)
         result = await db.execute(query)
@@ -37,7 +37,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return res
 
     async def get_multi_by_owner(
-            self, db: AsyncSession, *, owner_id: int, skip: int = 0, limit: int = 100
+        self, db: AsyncSession, *, owner_id: int, skip: int = 0, limit: int = 100
     ) -> List[ModelType]:
         result = await db.execute(
             select(self.model)
@@ -57,11 +57,11 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return db_obj
 
     async def update(
-            self,
-            db: AsyncSession,
-            *,
-            db_obj: ModelType,
-            obj_in: Union[UpdateSchemaType, Dict[str, Any]]
+        self,
+        db: AsyncSession,
+        *,
+        db_obj: ModelType,
+        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> ModelType:
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):

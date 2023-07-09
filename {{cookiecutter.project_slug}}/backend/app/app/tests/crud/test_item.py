@@ -1,5 +1,4 @@
 import pytest
-# from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud

@@ -1,9 +1,11 @@
 from typing import Dict
+
 import pytest
 
-#from fastapi.testclient import TestClient
+# from fastapi.testclient import TestClient
 from httpx import AsyncClient
-#from sqlalchemy.orm import AsyncSession
+
+# from sqlalchemy.orm import AsyncSession
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud
@@ -37,7 +39,9 @@ async def test_get_users_normal_user_me(
 
 
 async def test_create_user_new_email(
-    client: AsyncClient, superuser_token_headers: dict, async_get_db: AsyncSession
+    client: AsyncClient,
+    superuser_token_headers: dict,
+    async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
     password = random_lower_string()
@@ -55,7 +59,9 @@ async def test_create_user_new_email(
 
 
 async def test_get_existing_user(
-    client: AsyncClient, superuser_token_headers: dict, async_get_db: AsyncSession
+    client: AsyncClient,
+    superuser_token_headers: dict,
+    async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
     password = random_lower_string()
@@ -74,7 +80,9 @@ async def test_get_existing_user(
 
 
 async def test_create_user_existing_username(
-    client: AsyncClient, superuser_token_headers: dict, async_get_db: AsyncSession
+    client: AsyncClient,
+    superuser_token_headers: dict,
+    async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
     password = random_lower_string()
@@ -106,7 +114,9 @@ async def test_create_user_by_normal_user(
 
 
 async def test_retrieve_users(
-    client: AsyncClient, superuser_token_headers: dict, async_get_db: AsyncSession
+    client: AsyncClient,
+    superuser_token_headers: dict,
+    async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
     password = random_lower_string()

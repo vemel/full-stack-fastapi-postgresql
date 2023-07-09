@@ -15,10 +15,10 @@ router = APIRouter()
 
 @router.get("/", response_model=List[schemas.User])
 async def read_users(
-        db: AsyncSession = Depends(deps.async_get_db),
-        skip: int = 0,
-        limit: int = 100,
-        current_user: models.User = Depends(deps.get_current_active_superuser),
+    db: AsyncSession = Depends(deps.async_get_db),
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
     Retrieve users.
@@ -29,10 +29,10 @@ async def read_users(
 
 @router.post("/", response_model=schemas.User)
 async def create_user(
-        *,
-        db: AsyncSession = Depends(deps.async_get_db),
-        user_in: schemas.UserCreate,
-        current_user: models.User = Depends(deps.get_current_active_superuser),
+    *,
+    db: AsyncSession = Depends(deps.async_get_db),
+    user_in: schemas.UserCreate,
+    current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
     Create new user.
@@ -53,12 +53,12 @@ async def create_user(
 
 @router.put("/me", response_model=schemas.User)
 async def update_user_me(
-        *,
-        db: AsyncSession = Depends(deps.async_get_db),
-        password: str = Body(None),
-        full_name: str = Body(None),
-        email: EmailStr = Body(None),
-        current_user: models.User = Depends(deps.get_current_active_user),
+    *,
+    db: AsyncSession = Depends(deps.async_get_db),
+    password: str = Body(None),
+    full_name: str = Body(None),
+    email: EmailStr = Body(None),
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Update own user.
@@ -77,8 +77,8 @@ async def update_user_me(
 
 @router.get("/me", response_model=schemas.User)
 async def read_user_me(
-        db: AsyncSession = Depends(deps.async_get_db),
-        current_user: models.User = Depends(deps.get_current_active_user),
+    db: AsyncSession = Depends(deps.async_get_db),
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Get current user.
@@ -88,11 +88,11 @@ async def read_user_me(
 
 @router.post("/open", response_model=schemas.User)
 async def create_user_open(
-        *,
-        db: AsyncSession = Depends(deps.async_get_db),
-        password: str = Body(...),
-        email: EmailStr = Body(...),
-        full_name: str = Body(None),
+    *,
+    db: AsyncSession = Depends(deps.async_get_db),
+    password: str = Body(...),
+    email: EmailStr = Body(...),
+    full_name: str = Body(None),
 ) -> Any:
     """
     Create new user without the need to be logged in.
@@ -115,9 +115,9 @@ async def create_user_open(
 
 @router.get("/{user_id}", response_model=schemas.User)
 async def read_user_by_id(
-        user_id: int,
-        current_user: models.User = Depends(deps.get_current_active_user),
-        db: AsyncSession = Depends(deps.async_get_db),
+    user_id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+    db: AsyncSession = Depends(deps.async_get_db),
 ) -> Any:
     """
     Get a specific user by id.
@@ -134,11 +134,11 @@ async def read_user_by_id(
 
 @router.put("/{user_id}", response_model=schemas.User)
 async def update_user(
-        *,
-        db: AsyncSession = Depends(deps.async_get_db),
-        user_id: int,
-        user_in: schemas.UserUpdate,
-        current_user: models.User = Depends(deps.get_current_active_superuser),
+    *,
+    db: AsyncSession = Depends(deps.async_get_db),
+    user_id: int,
+    user_in: schemas.UserUpdate,
+    current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
     Update a user.
@@ -155,10 +155,10 @@ async def update_user(
 
 @router.delete("/{id}", response_model=schemas.User)
 async def delete_user(
-        *,
-        db: AsyncSession = Depends(deps.async_get_db),
-        id: int,
-        current_user: models.User = Depends(deps.get_current_active_superuser),
+    *,
+    db: AsyncSession = Depends(deps.async_get_db),
+    id: int,
+    current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
     Delete a user.

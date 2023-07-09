@@ -1,6 +1,5 @@
 from typing import Optional
 
-#from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud, models
