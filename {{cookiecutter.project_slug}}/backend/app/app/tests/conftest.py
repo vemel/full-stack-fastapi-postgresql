@@ -1,5 +1,5 @@
 import asyncio
-from typing import Any, AsyncGenerator, Dict, Generator
+from typing import Any, AsyncGenerator, Generator
 
 import pytest_asyncio
 from httpx import AsyncClient
@@ -30,7 +30,7 @@ async def client(event_loop: Any) -> AsyncGenerator[AsyncClient, None]:
 
 
 @pytest_asyncio.fixture
-async def superuser_token_headers(event_loop: Any, client: AsyncClient) -> Dict[str, str]:
+async def superuser_token_headers(event_loop: Any, client: AsyncClient) -> dict[str, str]:
     headers = await get_superuser_token_headers(client)
     return headers
 
@@ -38,7 +38,7 @@ async def superuser_token_headers(event_loop: Any, client: AsyncClient) -> Dict[
 @pytest_asyncio.fixture
 async def normal_user_token_headers(
     client: AsyncClient, async_get_db: AsyncSession
-) -> Dict[str, str]:
+) -> dict[str, str]:
     headers = await authentication_token_from_email(
         client=client, email=settings.EMAIL_TEST_USER, db=async_get_db
     )

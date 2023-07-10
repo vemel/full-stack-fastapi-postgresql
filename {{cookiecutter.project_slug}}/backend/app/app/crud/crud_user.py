@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import select
@@ -10,7 +10,7 @@ from app.schemas.user import UserCreate, UserUpdate
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
-    async def get_by_email(self, db: AsyncSession, *, email: str) -> Optional[User]:
+    async def get_by_email(self, db: AsyncSession, *, email: str) -> User | None:
         result = await db.execute(select(User).filter(User.email == email))
         return result.scalars().first()
 
@@ -27,11 +27,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return db_obj
 
     async def update(
-        self,
-        db: AsyncSession,
-        *,
-        db_obj: User,
-        obj_in: Union[UserUpdate, Dict[str, Any]]
+        self, db: AsyncSession, *, db_obj: User, obj_in: UserUpdate | dict[str, Any]
     ) -> User:
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -43,9 +39,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             update_data["hashed_password"] = hashed_password
         return await super().update(db, db_obj=db_obj, obj_in=update_data)
 
-    async def authenticate(
-        self, db: AsyncSession, *, email: str, password: str
-    ) -> Optional[User]:
+    async def authenticate(self, db: AsyncSession, *, email: str, password: str) -> User | None:
         user = await self.get_by_email(db, email=email)
         if not user:
             return None

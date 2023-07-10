@@ -1,5 +1,3 @@
-from typing import Dict
-
 import pytest
 
 # from fastapi.testclient import TestClient
@@ -17,7 +15,7 @@ pytestmark = pytest.mark.asyncio
 
 
 async def test_get_users_superuser_me(
-    client: AsyncClient, superuser_token_headers: Dict[str, str]
+    client: AsyncClient, superuser_token_headers: dict[str, str]
 ) -> None:
     r = await client.get(f"{settings.API_V1_STR}/users/me", headers=superuser_token_headers)
     current_user = r.json()
@@ -28,7 +26,7 @@ async def test_get_users_superuser_me(
 
 
 async def test_get_users_normal_user_me(
-    client: AsyncClient, normal_user_token_headers: Dict[str, str]
+    client: AsyncClient, normal_user_token_headers: dict[str, str]
 ) -> None:
     r = await client.get(f"{settings.API_V1_STR}/users/me", headers=normal_user_token_headers)
     current_user = r.json()
@@ -40,7 +38,7 @@ async def test_get_users_normal_user_me(
 
 async def test_create_user_new_email(
     client: AsyncClient,
-    superuser_token_headers: dict,
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
@@ -60,7 +58,7 @@ async def test_create_user_new_email(
 
 async def test_get_existing_user(
     client: AsyncClient,
-    superuser_token_headers: dict,
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
@@ -81,7 +79,7 @@ async def test_get_existing_user(
 
 async def test_create_user_existing_username(
     client: AsyncClient,
-    superuser_token_headers: dict,
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     username = random_email()
@@ -100,7 +98,7 @@ async def test_create_user_existing_username(
 
 
 async def test_create_user_by_normal_user(
-    client: AsyncClient, normal_user_token_headers: Dict[str, str]
+    client: AsyncClient, normal_user_token_headers: dict[str, str]
 ) -> None:
     username = random_email()
     password = random_lower_string()
@@ -115,7 +113,7 @@ async def test_create_user_by_normal_user(
 
 async def test_retrieve_users(
     client: AsyncClient,
-    superuser_token_headers: dict,
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     username = random_email()

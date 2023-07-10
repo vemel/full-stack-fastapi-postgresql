@@ -24,10 +24,7 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
         self, db: AsyncSession, *, owner_id: int, skip: int = 0, limit: int = 100
     ) -> List[Item]:
         result = await db.execute(
-            select(self.model)
-            .filter(Item.owner_id == owner_id)
-            .offset(skip)
-            .limit(limit)
+            select(self.model).filter(Item.owner_id == owner_id).offset(skip).limit(limit)
         )
         return result.scalars().all()
 

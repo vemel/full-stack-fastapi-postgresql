@@ -38,9 +38,7 @@ async def create_item(
     """
     Create new item.
     """
-    item = await crud.item.create_with_owner(
-        db=db, obj_in=item_in, owner_id=current_user.id
-    )
+    item = await crud.item.create_with_owner(db=db, obj_in=item_in, owner_id=current_user.id)
     return item
 
 

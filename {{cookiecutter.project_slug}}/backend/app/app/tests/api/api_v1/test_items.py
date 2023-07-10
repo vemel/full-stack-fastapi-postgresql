@@ -1,5 +1,3 @@
-from typing import Any, Dict
-
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,7 +10,7 @@ pytestmark = pytest.mark.asyncio
 
 async def test_create_item(
     client: AsyncClient,
-    superuser_token_headers: Dict[str, Any],
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     data = {"title": "Foo", "description": "Fighters"}
@@ -31,7 +29,7 @@ async def test_create_item(
 
 async def test_read_item(
     client: AsyncClient,
-    superuser_token_headers: Dict[str, Any],
+    superuser_token_headers: dict[str, str],
     async_get_db: AsyncSession,
 ) -> None:
     item = await create_random_item(async_get_db)

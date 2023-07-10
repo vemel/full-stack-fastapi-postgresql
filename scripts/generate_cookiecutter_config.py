@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any
 
 import yaml
 
@@ -8,8 +8,8 @@ import yaml
 cookie_path = Path("./cookiecutter.json")
 out_path = Path("./{{cookiecutter.project_slug}}/cookiecutter-config-file.yml")
 
-cookie_config: Dict[str, Any] = json.load(cookie_path.open())
-config_out: Dict[str, Any] = {}
+cookie_config: dict[str, Any] = json.load(cookie_path.open())
+config_out: dict[str, Any] = {}
 
 for key, value in cookie_config.items():
     if key.startswith("_"):

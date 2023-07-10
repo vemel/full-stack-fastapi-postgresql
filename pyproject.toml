@@ -16,9 +16,6 @@ classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -38,7 +35,7 @@ include = [
 "Bug Tracker" = "https://github.com/youtype/vue-fastapi-postgresql/issues"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 pip = "*"
 uvicorn = "^0.18.3"
 fastapi = "^0.82.0"
@@ -82,7 +79,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 100
-include = '(mypy_boto3_builder|types_s3transfer|tests)/.*\.pyi?$'
 target-version = [
     'py37',
     'py38',
@@ -128,4 +124,4 @@ reportMissingTypeArgument = "error"
 reportIncompatibleMethodOverride = "error"
 reportIncompatibleVariableOverride = "error"
 reportUnknownParameterType = "error"
-pythonVersion = "3.7"
+pythonVersion = "3.10"
