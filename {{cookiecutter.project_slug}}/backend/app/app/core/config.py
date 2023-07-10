@@ -1,15 +1,7 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import (
-    AnyHttpUrl,
-    BaseSettings,
-    EmailStr,
-    HttpUrl,
-    PostgresDsn,
-    parse_obj_as,
-    validator,
-)
+from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
 
 
 class AsyncPostgresDsn(PostgresDsn):
@@ -69,7 +61,7 @@ class Settings(BaseSettings):
             scheme="postgresql",
             user=values.get("POSTGRES_USER"),
             password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER", "localhost"),
+            host=values.get("POSTGRES_SERVER", "db"),
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
@@ -83,7 +75,7 @@ class Settings(BaseSettings):
             scheme="postgresql+asyncpg",
             user=values.get("POSTGRES_USER"),
             password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER", "localhost"),
+            host=values.get("POSTGRES_SERVER", "db"),
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
@@ -118,18 +110,8 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
 
-    class Config:
+    class Config(BaseSettings.Config):
         case_sensitive = True
 
 
-settings = Settings(
-    SERVER_NAME="localhost",
-    SERVER_HOST=parse_obj_as(AnyHttpUrl, "http://localhost:8000"),
-    PROJECT_NAME="project",
-    POSTGRES_SERVER="localhost",
-    POSTGRES_DB="app",
-    POSTGRES_USER="app",
-    POSTGRES_PASSWORD="app",
-    FIRST_SUPERUSER=EmailStr("admin@gmail.com"),
-    FIRST_SUPERUSER_PASSWORD="admin",
-)
+settings = Settings()  # type: ignore
